@@ -38,6 +38,15 @@ public class ProductController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
+        try {
+            productService.deleteProductById(id);
+            return (ResponseEntity<?>) ResponseEntity.ok();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
 
 
 }
