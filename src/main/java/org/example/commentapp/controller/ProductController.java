@@ -5,8 +5,7 @@ import org.example.commentapp.model.Product;
 import org.example.commentapp.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 import java.util.List;
@@ -24,12 +23,13 @@ public class ProductController {
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
-
-    public Product getProductById(Long id) {
+    }
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable Long id) {
             Optional<Product> product = productService.getProductById(id);
         return product.orElse(null);
     }
-    @PostMapping
+    @GetMapping
     public ResponseEntity<?> getAll() {
         try {
             List<Product> createProduct = productService.findAll();

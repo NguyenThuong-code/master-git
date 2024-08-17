@@ -4,8 +4,6 @@ import org.example.commentapp.model.Product;
 
 import java.util.Optional;
 
-import org.example.commentapp.model.Product;
-
 import java.util.List;
 
 public interface ProductService {
