@@ -5,8 +5,8 @@ import org.example.commentapp.repo.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.List;
-
 @Service
 public class ProductServiceImpl implements ProductService{
     @Autowired
@@ -15,9 +15,17 @@ public class ProductServiceImpl implements ProductService{
         productRepository.save(product);
         return product;
     }
+    public Optional<Product> getProductById(Long id) {
+        return productRepository.findById(id);
+    }
 
     @Override
     public List<Product> findAll() {
         return productRepository.findAll();
+    }
+
+    @Override
+    public void deleteProductById(Long id) {
+        productRepository.deleteById(id);
     }
 }

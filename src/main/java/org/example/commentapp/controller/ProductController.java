@@ -3,20 +3,16 @@ package org.example.commentapp.controller;
 import org.example.commentapp.model.Post;
 import org.example.commentapp.model.Product;
 import org.example.commentapp.service.ProductService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
 import java.util.List;
 
 @RestController
 @RequestMapping
 public class ProductController {
-
     @Autowired
     private ProductService productService;
     @PostMapping
@@ -28,11 +24,25 @@ public class ProductController {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
-    @PostMapping
+    @GetMapping("/{id}")
+    public Product getProductById(@PathVariable Long id) {
+            Optional<Product> product = productService.getProductById(id);
+        return product.orElse(null);
+    }
+    @GetMapping
     public ResponseEntity<?> getAll() {
         try {
             List<Product> createProduct = productService.findAll();
             return ResponseEntity.ok(createProduct);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteProduct(@PathVariable Long id) {
+        try {
+            productService.deleteProductById(id);
+            return (ResponseEntity<?>) ResponseEntity.ok();
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
